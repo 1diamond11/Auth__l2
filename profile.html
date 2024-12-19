@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Профиль пользователя</h2>
+        <div class="profile-info">
+            <p><strong>Ник:</strong> <span id="username"></span></p>
+            <p><strong>Дата регистрации:</strong> <span id="registration-date"></span></p>
+            <p><strong>Почта:</strong> <span id="email"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem('username');
+
+        if (!username) {
+            alert('Пользователь не найден. Пожалуйста, войдите снова.');
+            window.location.href = 'logIn.html';
+        }
+
+        fetch(`/user?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки данных пользователя');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('username').textContent = data.username;
+                document.getElementById('email').textContent = data.email;
+                document.getElementById('registration-date').textContent = data.registrationDate;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка загрузки данных пользователя.');
+            });
+    </script>
+</body>
+</html>

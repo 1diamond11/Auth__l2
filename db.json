@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "email": "mail@example.com",
+      "password": "$2a$10$yJF5kLa5JnaTmCjNRcKhu9.y4533tZW82JsIbZkJ3mmyZfFik.",
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    {
+      "username": "sanechka",
+      "email": "platochka1337r@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "temkapipi",
+      "email": "sigmmaboychik@dodik.com",
+      "password": "1234",
+      "registrationDate": "2024-12-19"
+    }
+  ],
+  "notes": [
+    {
+      "id": 1,
+      "name": "#todo 1",
+      "text": "\"bla bla\"",
+      "userId": 1,
+      "tagsId": [
+        1
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "to-do"
+    },
+    {
+      "id": 2,
+      "name": "to-buy"
+    }
+  ]
+}
