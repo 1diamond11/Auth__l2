@@ -14,7 +14,6 @@ if (!fs.existsSync(DB_FILE)) {
     fs.writeFileSync(DB_FILE, JSON.stringify({ users: [], catalog: [] }, null, 2));
 }
 
-// Чтение базы данных
 const readDB = () => {
     const data = fs.readFileSync(DB_FILE, "utf8");
     return JSON.parse(data);
@@ -111,7 +110,6 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/auth.html");
 });
 
-// Запуск сервера
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });
