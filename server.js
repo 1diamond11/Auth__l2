@@ -10,7 +10,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Создаем файл базы данных, если он отсутствует
 if (!fs.existsSync(DB_FILE)) {
     fs.writeFileSync(DB_FILE, JSON.stringify({ users: [], catalog: [] }, null, 2));
 }
@@ -21,12 +20,10 @@ const readDB = () => {
     return JSON.parse(data);
 };
 
-// Запись в базу данных
 const writeDB = (data) => {
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
 };
 
-// Регистрация пользователя
 app.post("/register", (req, res) => {
     const { username, email, password } = req.body;
 
@@ -54,7 +51,6 @@ app.post("/register", (req, res) => {
     res.status(201).send("Регистрация успешна.");
 });
 
-// Вход пользователя
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
@@ -68,7 +64,6 @@ app.post("/login", (req, res) => {
     res.status(200).json({ message: "Вход выполнен успешно.", user });
 });
 
-// Получение данных пользователя
 app.get("/user", (req, res) => {
     const { username } = req.query;
 
@@ -92,13 +87,11 @@ app.get("/user", (req, res) => {
     res.status(200).json(userData);
 });
 
-// Получение каталога
 app.get("/catalog", (req, res) => {
     const db = readDB();
     res.status(200).json(db.catalog);
 });
 
-// Добавление в каталог
 app.post("/catalog", (req, res) => {
     const { name, price, category } = req.body;
 
@@ -114,7 +107,6 @@ app.post("/catalog", (req, res) => {
     res.status(201).send("Товар добавлен в каталог.");
 });
 
-// Отправка основной страницы
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/auth.html");
 });
