@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма регистрации</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="registration-form">
+        <h2>Регистрация</h2>
+        <form id="registrationForm">
+            <input type="text" id="username" name="username" placeholder="Логин" maxlength="16" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Пароль" maxlength="16" required>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Повторите пароль" maxlength="16" required>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        <a href="logIn.html" class="login-link">Уже есть аккаунт? Войти</a>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm_password').value.trim();
+
+            if (password !== confirmPassword) {
+                alert('Пароли не совпадают');
+                return;
+            }
+
+            const data = { username, email, password };
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text);
+                    });
+                }
+                return response.text();
+            })
+            .then(message => {
+                alert(message);
+                localStorage.setItem('username', username);
+                window.location.href = '/profile.html';
+            })
+            .catch(error => {
+                console.error('Ошибка:', error.message);
+                alert('Ошибка регистрации: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
